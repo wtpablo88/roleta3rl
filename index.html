@@ -55,14 +55,14 @@
     async function loadRandom() {
       document.getElementById('info').innerText = 'Carregando...';
       try {
-        const r = await fetch('/api/random-stream');
+        const r = await fetch('https://tiny-boat-6551.wtpablo88.workers.dev/');
         if (!r.ok) {
           const t = await r.text();
           document.getElementById('info').innerText = 'Erro: ' + t;
           return;
         }
         const j = await r.json();
-        const host = location.hostname; // necessário para Twitch Embed API
+        const host = location.hostname;
         const iframe = document.getElementById('twitchPlayer');
         iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true`;
         document.getElementById('info').innerText = `${j.channel} — ${j.title} (${j.viewers} viewers)`;
