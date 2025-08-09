@@ -2,35 +2,32 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Twitch Random TV - Compatível TV Samsung</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Roleta 3RL Twitch Random TV</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
+      font-family: Arial, Helvetica, sans-serif;
       color: #fff;
-      font-family: Arial, sans-serif;
+      background: #121212;
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      gap: 12px;
+      padding: 18px;
     }
     #playerWrap {
-      flex-grow: 1;
       width: 100%;
       max-width: 1280px;
     }
     iframe {
       width: 100%;
-      height: 100%;
+      height: 720px;
       border: 0;
+      border-radius: 8px;
     }
     button {
       font-size: 20px;
-      padding: 12px 24px;
-      margin: 10px 0;
+      padding: 12px 20px;
       border-radius: 8px;
       border: none;
       cursor: pointer;
@@ -38,19 +35,21 @@
       color: white;
     }
     #info {
+      font-size: 16px;
       max-width: 1280px;
       text-align: center;
-      padding: 0 10px 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Twitch Random TV</h1>
+  <h1>Roleta 3RL Twitch Random TV</h1>
   <div id="playerWrap">
-    <iframe id="twitchPlayer" src="" allowfullscreen scrolling="no"></iframe>
+    <iframe id="twitchPlayer" src="" allowfullscreen="true" scrolling="no"></iframe>
   </div>
-  <button id="nextBtn">Next ▶</button>
-  <div id="info">Clique em Next para carregar um canal</div>
+  <div>
+    <button id="nextBtn">Next ▶</button>
+  </div>
+  <div id="info">Carregando...</div>
 
   <script>
     async function loadRandom() {
@@ -65,7 +64,7 @@
         const j = await r.json();
         const host = location.hostname;
         const iframe = document.getElementById('twitchPlayer');
-        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}`;
+        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true&muted=false&mobile=true`;
         document.getElementById('info').innerText = `${j.channel} — ${j.title} (${j.viewers} viewers)`;
       } catch (err) {
         document.getElementById('info').innerText = 'Erro JS: ' + err.message;
@@ -73,6 +72,9 @@
     }
 
     document.getElementById('nextBtn').addEventListener('click', loadRandom);
+
+    // carrega um canal logo ao abrir
+    loadRandom();
   </script>
 </body>
 </html>
