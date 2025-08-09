@@ -64,7 +64,8 @@
         const j = await r.json();
         const host = location.hostname;
         const iframe = document.getElementById('twitchPlayer');
-        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true&muted=false&mobile=true`;
+//        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true&muted=false&mobile=true`;
+        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}`;
         document.getElementById('info').innerText = `${j.channel} — ${j.title} (${j.viewers} viewers)`;
       } catch (err) {
         document.getElementById('info').innerText = 'Erro JS: ' + err.message;
