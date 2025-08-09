@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Twitch Random TV</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
+      background: #121212;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 18px;
+    }
+    #playerWrap {
+      width: 100%;
+      max-width: 1280px;
+    }
+    iframe {
+      width: 100%;
+      height: 720px;
+      border: 0;
+      border-radius: 8px;
+    }
+    button {
+      font-size: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #9146FF;
+      color: white;
+    }
+    #info {
+      font-size: 16px;
+      max-width: 1280px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Twitch Random TV</h1>
+  <div id="playerWrap">
+    <iframe id="twitchPlayer" src="" allowfullscreen="true" scrolling="no"></iframe>
+  </div>
+  <div>
+    <button id="nextBtn">Next ▶</button>
+  </div>
+  <div id="info">Carregando...</div>
+
+  <script>
+    async function loadRandom() {
+      document.getElementById('info').innerText = 'Carregando...';
+      try {
+        const r = await fetch('/api/random-stream');
+        if (!r.ok) {
+          const t = await r.text();
+          document.getElementById('info').innerText = 'Erro: ' + t;
+          return;
+        }
+        const j = await r.json();
+        const host = location.hostname; // necessário para Twitch Embed API
+        const iframe = document.getElementById('twitchPlayer');
+        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true`;
+        document.getElementById('info').innerText = `${j.channel} — ${j.title} (${j.viewers} viewers)`;
+      } catch (err) {
+        document.getElementById('info').innerText = 'Erro JS: ' + err.message;
+      }
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', loadRandom);
+
+    // carrega um canal logo ao abrir
+    loadRandom();
+  </script>
+</body>
+</html>
