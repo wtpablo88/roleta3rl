@@ -55,7 +55,7 @@
     async function loadRandom() {
       document.getElementById('info').innerText = 'Carregando...';
       try {
-        const r = await fetch('https://tiny-boat-6551.wtpablo88.workers.dev/');
+        const r = await fetch('https://tiny-boat-6551.wtpablo88.workers.dev/api/random-stream');
         if (!r.ok) {
           const t = await r.text();
           document.getElementById('info').innerText = 'Erro: ' + t;
