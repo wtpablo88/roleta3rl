@@ -42,7 +42,7 @@
   </style>
 </head>
 <body>
-  <h1>Twitch Random TV</h1>
+  <h1>Roleta 3RL Twitch Random TV</h1>
   <div id="playerWrap">
     <iframe id="twitchPlayer" src="" allowfullscreen="true" scrolling="no"></iframe>
   </div>
@@ -64,8 +64,7 @@
         const j = await r.json();
         const host = location.hostname;
         const iframe = document.getElementById('twitchPlayer');
-//        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true&muted=false&mobile=true`;
-        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}`;
+        iframe.src = `https://player.twitch.tv/?channel=${encodeURIComponent(j.channel)}&parent=${host}&autoplay=true&muted=false&mobile=true`;
         document.getElementById('info').innerText = `${j.channel} — ${j.title} (${j.viewers} viewers)`;
       } catch (err) {
         document.getElementById('info').innerText = 'Erro JS: ' + err.message;
